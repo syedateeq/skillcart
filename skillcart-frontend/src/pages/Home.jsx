@@ -10,11 +10,13 @@ const categories = ['All', 'Web Development', 'Backend Development', 'Programmin
 export default function Home() {
   const [courses, setCourses] = useState([])
   const [loading, setLoading] = useState(true)
-  const [category, setCategory] = useState('All')
-  const [level, setLevel] = useState('All')
-  const [priceMax, setPriceMax] = useState(5000)
   const [params] = useSearchParams()
+  
   const search = params.get('search') || ''
+  const category = params.get('category') || 'All'
+  const level = params.get('level') || 'All'
+  const priceMax = params.get('priceMax') || 5000
+  
   const { isAdmin } = useAuth()
 
   useEffect(() => {
@@ -51,38 +53,9 @@ export default function Home() {
         <div className="container">
           <div className="section-head"><div><h2>Featured Courses</h2><p>Learn from industry experts and enhance your skills.</p></div></div>
           
-          <div className="detail-layout" style={{gridTemplateColumns: '250px 1fr', gap: 30, alignItems: 'start'}}>
-            <aside className="card" style={{position: 'sticky', top: 92, padding: 20}}>
-              <h3 style={{marginTop: 0}}>Filters</h3>
-              <div className="form-group">
-                <label>Category</label>
-                <div style={{display:'flex', flexDirection:'column', gap:5}}>
-                  {categories.map(c => (
-                    <label key={c} style={{display:'flex', gap: 8, cursor:'pointer'}}>
-                      <input type="radio" name="category" checked={category === c} onChange={() => setCategory(c)} />
-                      {c}
-                    </label>
-                  ))}
-                </div>
-              </div>
-              <div className="form-group" style={{marginTop: 20}}>
-                <label>Level</label>
-                <select className="input" value={level} onChange={e => setLevel(e.target.value)}>
-                  <option value="All">All Levels</option>
-                  <option value="BEGINNER">Beginner</option>
-                  <option value="INTERMEDIATE">Intermediate</option>
-                  <option value="ADVANCED">Advanced</option>
-                </select>
-              </div>
-              <div className="form-group" style={{marginTop: 20}}>
-                <label>Max Price: ₹{priceMax}</label>
-                <input type="range" min="0" max="10000" step="100" value={priceMax} onChange={e => setPriceMax(e.target.value)} style={{width:'100%'}} />
-              </div>
-            </aside>
-            <main>
-              {loading ? <p>Loading courses...</p> : courses.length === 0 ? <EmptyState title="No courses available yet" message="Adjust your filters or clear search." action={isAdmin ? <Link className="btn btn-primary" to="/admin/courses/new">Add Course</Link> : null} /> : <div className="grid">{courses.map(course => <CourseCard key={course.id} course={course} />)}</div>}
-            </main>
-          </div>
+          <main>
+            {loading ? <p>Loading courses...</p> : courses.length === 0 ? <EmptyState title="No courses available yet" message="Adjust your filters or clear search." action={isAdmin ? <Link className="btn btn-primary" to="/admin/courses/new">Add Course</Link> : null} /> : <div className="grid">{courses.map(course => <CourseCard key={course.id} course={course} />)}</div>}
+          </main>
         </div>
       </section>
     </>
