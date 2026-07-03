@@ -25,7 +25,7 @@ public class LearningService {
     private final LessonRepository lessonRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final LessonProgressRepository lessonProgressRepository;
-    private final CertificateRepository certificateRepository;
+    private final CertificateService certificateService;
 
     public List<EnrollmentResponse> myCourses(String email) {
         return enrollmentRepository.findByUserEmailOrderByEnrolledAtDesc(email).stream()
@@ -71,12 +71,8 @@ public class LearningService {
         enrollment.setCompleted(percentage >= 100.0);
         enrollmentRepository.save(enrollment);
 
-        if (enrollment.getCompleted() && !certificateRepository.existsByUserIdAndCourseId(user.getId(), course.getId())) {
-            Certificate cert = Certificate.builder()
-                    .user(user).course(course)
-                    .certificateHash(java.util.UUID.randomUUID().toString())
-                    .build();
-            certificateRepository.save(cert);
+        if (enrollment.getCompleted()) {
+            certificateService.generateCertificate(user, course);
         }
 
         return ProgressResponse.builder()

@@ -21,12 +21,17 @@ public class Certificate {
     private Course course;
 
     @Column(nullable = false, unique = true)
-    private String certificateHash;
+    private String certificateCode;
+
+    private String instructorName;
 
     private LocalDateTime issueDate;
+    
+    private LocalDateTime completionDate;
 
     @PrePersist
     void onCreate() {
         if (issueDate == null) issueDate = LocalDateTime.now();
+        if (completionDate == null) completionDate = LocalDateTime.now();
     }
 }

@@ -13,7 +13,8 @@ import Cart from './pages/Cart.jsx'
 import Wishlist from './pages/Wishlist.jsx'
 import CertificateView from './pages/CertificateView.jsx'
 import ProtectedRoute from './components/ProtectedRoute.jsx'
-
+import Certificates from './pages/Certificates.jsx'
+import VerifyCertificate from './pages/VerifyCertificate.jsx'
 function App() {
   return (
     <div className="app-shell">
@@ -27,8 +28,10 @@ function App() {
         <Route path="/wishlist" element={<ProtectedRoute><Wishlist /></ProtectedRoute>} />
         <Route path="/my-learning" element={<ProtectedRoute><MyLearning /></ProtectedRoute>} />
         <Route path="/learn/:courseId" element={<ProtectedRoute><LearnCourse /></ProtectedRoute>} />
+        <Route path="/certificates" element={<ProtectedRoute><Certificates /></ProtectedRoute>} />
         <Route path="/certificates/course/:id" element={<ProtectedRoute><CertificateView /></ProtectedRoute>} />
         <Route path="/certificates/:id" element={<CertificateView />} />
+        <Route path="/verify/:certificateCode" element={<VerifyCertificate />} />
         <Route path="/admin/dashboard" element={<ProtectedRoute adminOnly><AdminDashboard /></ProtectedRoute>} />
         <Route path="/admin/courses" element={<ProtectedRoute adminOnly><AdminCourses /></ProtectedRoute>} />
         <Route path="/admin/courses/new" element={<ProtectedRoute adminOnly><AdminCourseForm /></ProtectedRoute>} />

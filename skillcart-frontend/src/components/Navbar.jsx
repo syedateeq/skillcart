@@ -112,6 +112,7 @@ export default function Navbar() {
           {user && <Link to="/cart">Cart</Link>}
           {user && <Link to="/wishlist">Wishlist</Link>}
           {user && <Link to="/my-learning">My Learning</Link>}
+          {user && <Link to="/certificates">Certificates</Link>}
           {isAdmin && <Link to="/admin/dashboard">Admin</Link>}
           {!user ? <><Link to="/login">Login</Link><Link className="btn btn-primary" to="/register">Join</Link></> : <><span className="user-pill">Hi, {user.name?.split(' ')[0]}</span><button className="logout" onClick={logout}>Logout</button></>}
         </nav>

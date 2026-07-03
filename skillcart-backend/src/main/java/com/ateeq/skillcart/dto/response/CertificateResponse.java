@@ -9,19 +9,21 @@ import java.time.LocalDateTime;
 @Data
 @Builder
 public class CertificateResponse {
-    private String id;
+    private String certificateCode;
     private String studentName;
     private String courseName;
     private String instructorName;
     private LocalDateTime issueDate;
+    private LocalDateTime completionDate;
 
     public static CertificateResponse from(Certificate c) {
         return CertificateResponse.builder()
-                .id(c.getCertificateHash())
+                .certificateCode(c.getCertificateCode())
                 .studentName(c.getUser().getName())
                 .courseName(c.getCourse().getTitle())
-                .instructorName(c.getCourse().getInstructorName())
+                .instructorName(c.getInstructorName())
                 .issueDate(c.getIssueDate())
+                .completionDate(c.getCompletionDate())
                 .build();
     }
 }
